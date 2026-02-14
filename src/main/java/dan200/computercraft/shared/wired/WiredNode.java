@@ -6,6 +6,7 @@
 package dan200.computercraft.shared.wired;
 
 import dan200.computercraft.api.network.IPacketReceiver;
+import dan200.computercraft.api.network.IPacketSender;
 import dan200.computercraft.api.network.Packet;
 import dan200.computercraft.api.network.wired.IWiredElement;
 import dan200.computercraft.api.network.wired.IWiredNetwork;
@@ -46,23 +47,26 @@ public final class WiredNode implements IWiredNode
         if( receivers != null ) receivers.remove( receiver );
     }
 
-    synchronized void tryTransmit( Packet packet, double packetDistance, boolean packetInterdimensional, double range, boolean interdimensional )
+    synchronized void tryTransmit( Packet packet, double packetDistance, boolean packetInterdimensional, boolean interdimensional )
     {
         if( receivers == null ) return;
+
+        IPacketSender sender = packet.sender();
 
         for( IPacketReceiver receiver : receivers )
         {
             if( !packetInterdimensional )
             {
-                double receiveRange = Math.max( range, receiver.getRange() ); // Ensure range is symmetrical
-                if( interdimensional || receiver.isInterdimensional() || packetDistance < receiveRange )
+                double receiveRange = sender.getRangeAtLevel( receiver.getLevel() );
+
+                if( interdimensional || sender.isInterdimensional() || packetDistance < receiveRange )
                 {
                     receiver.receiveSameDimension( packet, packetDistance + element.getPosition().distanceTo( receiver.getPosition() ) );
                 }
             }
             else
             {
-                if( interdimensional || receiver.isInterdimensional() )
+                if( interdimensional || sender.isInterdimensional() )
                 {
                     receiver.receiveDifferentDimension( packet );
                 }
@@ -77,7 +81,7 @@ public final class WiredNode implements IWiredNode
     }
 
     @Override
-    public void transmitSameDimension( @Nonnull Packet packet, double range )
+    public void transmitSameDimension( @Nonnull Packet packet )
     {
         Objects.requireNonNull( packet, "packet cannot be null" );
         if( !(packet.sender() instanceof IWiredSender) || ((IWiredSender) packet.sender()).getNode() != this )
@@ -88,7 +92,7 @@ public final class WiredNode implements IWiredNode
         acquireReadLock();
         try
         {
-            WiredNetwork.transmitPacket( this, packet, range, false );
+            WiredNetwork.transmitPacket( this, packet, false );
         }
         finally
         {
@@ -108,7 +112,7 @@ public final class WiredNode implements IWiredNode
         acquireReadLock();
         try
         {
-            WiredNetwork.transmitPacket( this, packet, 0, true );
+            WiredNetwork.transmitPacket( this, packet, true );
         }
         finally
         {

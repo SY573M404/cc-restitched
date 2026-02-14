@@ -83,6 +83,25 @@ public class TileWiredModemFull extends TileGeneric implements IPeripheralTile
         {
             return Vec3.atCenterOf( entity.getBlockPos() );
         }
+
+        @Override
+        public boolean isInterdimensional()
+        {
+            return false;
+        }
+
+        @Override
+        public double getRangeAtLevel( Level level )
+        {
+            if( getLevel() == level )
+            {
+                return 256.0;
+            }
+            else
+            {
+                return 0.0;
+            }
+        }
     }
 
     private final WiredModemPeripheral[] modems = new WiredModemPeripheral[6];

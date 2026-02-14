@@ -68,6 +68,18 @@ public class TileCable extends TileGeneric implements IPeripheralTile
         {
             modem.detachPeripheral( name );
         }
+
+        @Override
+        public double getRangeAtLevel( Level level )
+        {
+            return 0;
+        }
+
+        @Override
+        public boolean isInterdimensional()
+        {
+            return false;
+        }
     }
 
     private boolean invalidPeripheral;

@@ -50,9 +50,16 @@ public abstract class WiredModemPeripheral extends ModemPeripheral implements IW
     }
 
     @Override
-    public double getRange()
+    public double getRangeAtLevel( Level level )
     {
-        return 256.0;
+        if( getLevel() == level )
+        {
+            return 256.0;
+        }
+        else
+        {
+            return 0.0;
+        }
     }
 
     @Override

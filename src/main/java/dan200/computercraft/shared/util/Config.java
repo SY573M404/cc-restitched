@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 public final class Config
 {
     private static final int MODEM_MAX_RANGE = 100000;
+    private static final int ADVANCED_MODEM_MAX_RANGE = Integer.MAX_VALUE;
 
     public static final String TRANSLATION_PREFIX = "gui.computercraft.config.";
 
@@ -169,6 +170,26 @@ public final class Config
             serverSpec.comment( "peripheral.modem_high_altitude_range_during_storm",
                 "The range of Wireless Modems at maximum altitude in stormy weather, in meters" );
             serverSpec.defineInRange( "peripheral.modem_high_altitude_range_during_storm", ComputerCraft.modemHighAltitudeRangeDuringStorm, 0, MODEM_MAX_RANGE );
+
+            serverSpec.comment( "peripheral.advanced_modem_range",
+                "The range of Ender Modems at low altitude in same dimension in clear weather, in meters" );
+            serverSpec.defineInRange( "peripheral.advanced_modem_range", ComputerCraft.advancedModemRange, 0, ADVANCED_MODEM_MAX_RANGE );
+
+            serverSpec.comment( "peripheral.advanced_modem_high_altitude_range",
+                "The range of Ender Modems at maximum altitude in same dimension in clear weather, in meters" );
+            serverSpec.defineInRange( "peripheral.advanced_modem_high_altitude_range", ComputerCraft.advancedModemHighAltitudeRange, 0, ADVANCED_MODEM_MAX_RANGE );
+
+            serverSpec.comment( "peripheral.advanced_modem_range_during_storm",
+                "The range of Ender Modems at low altitude in same dimension in stormy weather, in meters" );
+            serverSpec.defineInRange( "peripheral.advanced_modem_range_during_storm", ComputerCraft.advancedModemRangeDuringStorm, 0, ADVANCED_MODEM_MAX_RANGE );
+
+            serverSpec.comment( "peripheral.advanced_modem_high_altitude_range_during_storm",
+                "The range of Ender Modems at maximum altitude in same dimension in stormy weather, in meters" );
+            serverSpec.defineInRange( "peripheral.advanced_modem_high_altitude_range_during_storm", ComputerCraft.advancedModemHighAltitudeRangeDuringStorm, 0, ADVANCED_MODEM_MAX_RANGE );
+
+            serverSpec.comment( "peripheral.advanced_modem_interdimensional_range",
+                "The range of Ender Modems across different dimensions, in meters" );
+            serverSpec.defineInRange( "peripheral.advanced_modem_interdimensional_range", ComputerCraft.advancedModemInterdimensionalRange, 0, ADVANCED_MODEM_MAX_RANGE );
 
             serverSpec.comment( "peripheral.max_notes_per_tick",
                 "Maximum amount of notes a speaker can play at once" );
@@ -355,6 +376,11 @@ public final class Config
             ComputerCraft.modemHighAltitudeRange = serverConfig.<Integer>get( "peripheral.modem_high_altitude_range" );
             ComputerCraft.modemRangeDuringStorm = serverConfig.<Integer>get( "peripheral.modem_range_during_storm" );
             ComputerCraft.modemHighAltitudeRangeDuringStorm = serverConfig.<Integer>get( "peripheral.modem_high_altitude_range_during_storm" );
+            ComputerCraft.advancedModemRange = serverConfig.<Integer>get( "peripheral.advanced_modem_range" );
+            ComputerCraft.advancedModemHighAltitudeRange = serverConfig.<Integer>get( "peripheral.advanced_modem_high_altitude_range" );
+            ComputerCraft.advancedModemRangeDuringStorm = serverConfig.<Integer>get( "peripheral.advanced_modem_range_during_storm" );
+            ComputerCraft.advancedModemHighAltitudeRangeDuringStorm = serverConfig.<Integer>get( "peripheral.advanced_modem_high_altitude_range_during_storm" );
+            ComputerCraft.advancedModemInterdimensionalRange = serverConfig.<Integer>get( "peripheral.advanced_modem_interdimensional_range" );
             ComputerCraft.maxNotesPerTick = serverConfig.<Integer>get( "peripheral.max_notes_per_tick" );
             ComputerCraft.monitorBandwidth = serverConfig.<Integer>get( "peripheral.monitor_bandwidth" );
 

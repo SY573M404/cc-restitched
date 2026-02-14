@@ -383,6 +383,18 @@ public class NetworkTest
         {
             return remotePeripherals;
         }
+
+        @Override
+        public boolean isInterdimensional()
+        {
+            return false;
+        }
+
+        @Override
+        public double getRangeAtLevel( Level level )
+        {
+            return 0;
+        }
     }
 
     private static class NetworkPeripheral implements IPeripheral

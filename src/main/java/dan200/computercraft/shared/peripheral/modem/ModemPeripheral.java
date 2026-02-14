@@ -245,7 +245,7 @@ public abstract class ModemPeripheral implements IPeripheral, IPacketSender, IPa
         }
         else
         {
-            network.transmitSameDimension( packet, getRange() );
+            network.transmitSameDimension( packet );
         }
     }
 
