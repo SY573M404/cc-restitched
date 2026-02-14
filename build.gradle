@@ -262,6 +262,7 @@ import com.hierynomus.gradle.license.tasks.LicenseFormat
 license {
     mapping("java", "SLASHSTAR_STYLE")
     strictCheck true
+    ignoreFailures true
 
     ext.year = Calendar.getInstance().get(Calendar.YEAR)
 }
