@@ -319,7 +319,7 @@ public final class WiredNetwork implements IWiredNetwork
         }
     }
 
-    static void transmitPacket( WiredNode start, Packet packet, double range, boolean interdimensional )
+    static void transmitPacket( WiredNode start, Packet packet, boolean interdimensional )
     {
         Map<WiredNode, TransmitPoint> points = new HashMap<>();
         TreeSet<TransmitPoint> transmitTo = new TreeSet<>();
@@ -374,7 +374,7 @@ public final class WiredNetwork implements IWiredNetwork
 
         for( TransmitPoint point : points.values() )
         {
-            point.node.tryTransmit( packet, point.distance, point.interdimensional, range, interdimensional );
+            point.node.tryTransmit( packet, point.distance, point.interdimensional, interdimensional );
         }
     }
 

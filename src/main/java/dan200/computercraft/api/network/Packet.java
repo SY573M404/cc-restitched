@@ -15,7 +15,7 @@ package dan200.computercraft.api.network;
  *                     event or returning from a peripheral call.
  * @param sender       The object which sent this packet.
  * @see IPacketSender
- * @see IPacketNetwork#transmitSameDimension(Packet, double)
+ * @see IPacketNetwork#transmitSameDimension(Packet)
  * @see IPacketNetwork#transmitInterdimensional(Packet)
  * @see IPacketReceiver#receiveDifferentDimension(Packet)
  * @see IPacketReceiver#receiveSameDimension(Packet, double)

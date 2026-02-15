@@ -71,6 +71,11 @@ public final class ComputerCraft
     public static int modemHighAltitudeRange = 384;
     public static int modemRangeDuringStorm = 64;
     public static int modemHighAltitudeRangeDuringStorm = 384;
+    public static int advancedModemRange = Integer.MAX_VALUE;
+    public static int advancedModemHighAltitudeRange = Integer.MAX_VALUE;
+    public static int advancedModemRangeDuringStorm = Integer.MAX_VALUE;
+    public static int advancedModemHighAltitudeRangeDuringStorm = Integer.MAX_VALUE;
+    public static int advancedModemInterdimensionalRange = Integer.MAX_VALUE;
     public static int maxNotesPerTick = 8;
     public static MonitorRenderer monitorRenderer = MonitorRenderer.BEST;
     public static int monitorDistance = 65;

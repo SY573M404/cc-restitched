@@ -48,34 +48,32 @@ public class WirelessNetwork implements IPacketNetwork
     }
 
     @Override
-    public void transmitSameDimension( @Nonnull Packet packet, double range )
+    public void transmitSameDimension( @Nonnull Packet packet )
     {
         Objects.requireNonNull( packet, "packet cannot be null" );
-        for( IPacketReceiver device : receivers ) tryTransmit( device, packet, range, false );
+        for( IPacketReceiver device : receivers ) tryTransmit( device, packet, false );
     }
 
     @Override
     public void transmitInterdimensional( @Nonnull Packet packet )
     {
         Objects.requireNonNull( packet, "packet cannot be null" );
-        for( IPacketReceiver device : receivers ) tryTransmit( device, packet, 0, true );
+        for( IPacketReceiver device : receivers ) tryTransmit( device, packet, true );
     }
 
-    private static void tryTransmit( IPacketReceiver receiver, Packet packet, double range, boolean interdimensional )
+    private static void tryTransmit( IPacketReceiver receiver, Packet packet, boolean interdimensional )
     {
         IPacketSender sender = packet.sender();
-        if( receiver.getLevel() == sender.getLevel() )
+        double receiveRange = sender.getRangeAtLevel( receiver.getLevel() );
+        double distanceSq = receiver.getPosition().distanceToSqr( sender.getPosition() );
+
+        if( distanceSq <= receiveRange * receiveRange )
         {
-            double receiveRange = Math.max( range, receiver.getRange() ); // Ensure range is symmetrical
-            double distanceSq = receiver.getPosition().distanceToSqr( sender.getPosition() );
-            if( interdimensional || receiver.isInterdimensional() || distanceSq <= receiveRange * receiveRange )
+            if( sender.getLevel() == receiver.getLevel() )
             {
                 receiver.receiveSameDimension( packet, Math.sqrt( distanceSq ) );
             }
-        }
-        else
-        {
-            if( interdimensional || receiver.isInterdimensional() )
+            else
             {
                 receiver.receiveDifferentDimension( packet );
             }

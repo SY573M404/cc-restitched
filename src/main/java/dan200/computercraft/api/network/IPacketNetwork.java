@@ -41,18 +41,17 @@ public interface IPacketNetwork
      * to all receivers within range (or any interdimensional ones).
      *
      * @param packet The packet to send.
-     * @param range  The maximum distance this packet will be sent.
      * @see #transmitInterdimensional(Packet)
      * @see IPacketReceiver#receiveSameDimension(Packet, double)
      */
-    void transmitSameDimension( @Nonnull Packet packet, double range );
+    void transmitSameDimension( @Nonnull Packet packet );
 
     /**
      * Submit a packet for transmitting across the network. This will route the packet through the network, sending it
      * to all receivers across all dimensions.
      *
      * @param packet The packet to send.
-     * @see #transmitSameDimension(Packet, double)
+     * @see #transmitSameDimension(Packet)
      * @see IPacketReceiver#receiveDifferentDimension(Packet)
      */
     void transmitInterdimensional( @Nonnull Packet packet );

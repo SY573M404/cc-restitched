@@ -32,33 +32,51 @@ public abstract class WirelessModemPeripheral extends ModemPeripheral
     }
 
     @Override
-    public double getRange()
+    public double getRangeAtLevel( Level level )
     {
+        int range = ComputerCraft.modemRange;
+        int highAltitudeRange = ComputerCraft.modemHighAltitudeRange;
+        int rangeDuringStorm = ComputerCraft.modemRangeDuringStorm;
+        int highAltitudeRangeDuringStorm = ComputerCraft.modemHighAltitudeRangeDuringStorm;
+
         if( advanced )
         {
-            return Integer.MAX_VALUE;
+            range = ComputerCraft.advancedModemRange;
+            highAltitudeRange = ComputerCraft.advancedModemHighAltitudeRange;
+            rangeDuringStorm = ComputerCraft.advancedModemRangeDuringStorm;
+            highAltitudeRangeDuringStorm = ComputerCraft.advancedModemHighAltitudeRangeDuringStorm;
         }
-        else
+
+        Level world = getLevel();
+
+        if( world != level )
         {
-            Level world = getLevel();
-            if( world != null )
+            if( advanced )
             {
-                Vec3 position = getPosition();
-                double minRange = ComputerCraft.modemRange;
-                double maxRange = ComputerCraft.modemHighAltitudeRange;
-                if( world.isRaining() && world.isThundering() )
-                {
-                    minRange = ComputerCraft.modemRangeDuringStorm;
-                    maxRange = ComputerCraft.modemHighAltitudeRangeDuringStorm;
-                }
-                if( position.y > 96.0 && maxRange > minRange )
-                {
-                    return minRange + (position.y - 96.0) * ((maxRange - minRange) / ((world.getMaxBuildHeight() - 1) - 96.0));
-                }
-                return minRange;
+                range = ComputerCraft.advancedModemInterdimensionalRange;
+                highAltitudeRange = ComputerCraft.advancedModemInterdimensionalRange;
+                rangeDuringStorm = range;
+                highAltitudeRangeDuringStorm = highAltitudeRange;
             }
-            return 0.0;
+            else
+            {
+                return 0.0;
+            }
         }
+
+        Vec3 position = getPosition();
+        double minRange = range;
+        double maxRange = highAltitudeRange;
+        if( world.isRaining() && world.isThundering() )
+        {
+            minRange = rangeDuringStorm;
+            maxRange = highAltitudeRangeDuringStorm;
+        }
+        if( position.y > 96.0 && maxRange > minRange )
+        {
+            return minRange + (position.y - 96.0) * ((maxRange - minRange) / ((world.getMaxBuildHeight() - 1) - 96.0));
+        }
+        return minRange;
     }
 
     @Override
